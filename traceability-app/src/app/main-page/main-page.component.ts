@@ -10,7 +10,7 @@ import {AuthenticationResult} from "@azure/msal-browser";
 })
 export class MainPageComponent implements OnInit {
 
-  displayPlatform = false;
+  displayPlatform:boolean = false;
   username:string;
   step:number = 1;
   options = [
@@ -54,6 +54,10 @@ export class MainPageComponent implements OnInit {
       this.displayPlatform = true;
       this.sliceUsername();
     }
+  }
+
+  onSubmit(){
+
   }
 
   sliceUsername(){

@@ -1,1 +1,15 @@
-/* You can add global styles to this file, and also import other style files */
+
+body{
+  margin: 0;
+  padding: 0;
+  background: #f8f9fa !important;
+  color: #222 !important;
+  font-family: DINPro,Helvetica,Arial,Sans-Serif;
+}
+
+.card {
+  font-weight: 400;
+  border: 0;
+  -webkit-box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
+  box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
+}

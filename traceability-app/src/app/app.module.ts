@@ -7,6 +7,7 @@ import {MSAL_INSTANCE, MsalModule, MsalService} from "@azure/msal-angular";
 import {IPublicClientApplication, PublicClientApplication} from "@azure/msal-browser";
 import { MainPageComponent } from './main-page/main-page.component';
 import { ApplicationComponent } from './application/application.component';
+import { NotFoundComponent } from './not-found/not-found.component';
 
 
 export function MSALInstanceFactory():IPublicClientApplication{
@@ -23,6 +24,7 @@ export function MSALInstanceFactory():IPublicClientApplication{
     AppComponent,
     MainPageComponent,
     ApplicationComponent,
+    NotFoundComponent,
 
   ],
   imports: [
