@@ -26,3 +26,15 @@ body{
   font-weight: bold;
   text-decoration: underline;
 }
+
+ul.searchList{
+  list-style-type:none;
+  padding: 0;
+}
+
+ul.searchList li{
+  display: inline-block;
+}
+ul.searchList li {
+  padding:5px;
+}

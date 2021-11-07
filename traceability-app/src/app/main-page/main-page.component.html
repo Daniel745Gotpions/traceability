@@ -81,11 +81,14 @@
 
 
                 <div *ngIf="fetchData[0].dataFound.length">
-                  <input type="button" class="btn btn-success createSessionAction" value="Create Session">
-                  <input type="button" class="btn btn-danger returnBackAction" value="Cancel">
+                  <input type="button" style="margin-right: 5px;" class="btn btn-success createSessionAction" value="Create Session">
+                  <input type="button" (click)="returnStep1();" class="btn btn-danger returnBackAction" value="Cancel">
                 </div>
-                <p *ngIf="!fetchData[0].dataFound.length"><b>Traceability information not found..</b></p><br> <input type="button" class="btn btn-danger returnBackAction" value="Back">
-
+                <div *ngIf="!fetchData[0].dataFound.length">
+                  <p><b>Traceability information not found..</b></p>
+                  <br>
+                  <input (click)="returnStep1();" type="button" class="btn btn-danger returnBackAction" value="Back">
+                </div>
               </div>
             </div>
           </div>

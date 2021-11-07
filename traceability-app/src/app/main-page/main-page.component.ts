@@ -77,6 +77,10 @@ export class MainPageComponent implements OnInit {
     }
   }
 
+  returnStep1(){
+    this.step = 1;
+  }
+
   onSubmit(){
     if (!this.myForm.valid) {
       return false;
