@@ -42,7 +42,7 @@
           </div>
           <div *ngIf="step==2">
 
-              <div class="row" *ngIf="fetchData[0].selectedOption == 'SERIAL_NUMBER' ">
+              <div class="row" *ngIf="fetchData[0].selectedOption == 'SERIAL_NUMBER' && fetchData[0].notFound.length">
                   <div class="col-lg-12">
                       <b>Traceability information not found for Serial Number:</b> <mark>{{fetchData[0].notFound}} </mark>
                   </div>
