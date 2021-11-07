@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {MsalService} from "@azure/msal-angular";
 import {Routes,ActivatedRoute,Router} from "@angular/router";
 import {AuthenticationResult} from "@azure/msal-browser";
+import {FormBuilder,Validators,FormGroup, FormControl} from "@angular/forms";
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-main-page',
@@ -13,6 +15,7 @@ export class MainPageComponent implements OnInit {
   displayPlatform:boolean = false;
   username:string;
   step:number = 1;
+  session:string;
   options = [
     {key:'SERIAL_NUMBER',value:'Serial Number'},
     {key:'SHIP_PACK',value:'Shipment Box Number'},
@@ -37,7 +40,25 @@ export class MainPageComponent implements OnInit {
     {key:'PO_LINE',value:'Purchase order Line'},
   ];
 
-  constructor(private msalService:MsalService,private router:Router) { }
+  fetchData = [{
+    'dataFound': [],
+    'totalFetch': 0,
+    'selectedOption': 'SERIAL_NUMBER',
+    'totalSearch':0,
+    notFound:[]
+  }];
+
+  onChange(e){
+    this.fetchData[0].selectedOption = e.target.value;;
+  }
+
+  constructor(private msalService:MsalService,private router:Router,private fb: FormBuilder,private http:HttpClient) { }
+
+  myForm:any = this.fb.group({
+    batchOption: ['SERIAL_NUMBER',Validators.required],
+    sns:['', Validators.required],
+    username:['',Validators.required]
+  });
 
   ngOnInit(){
 
@@ -57,12 +78,28 @@ export class MainPageComponent implements OnInit {
   }
 
   onSubmit(){
+    if (!this.myForm.valid) {
+      return false;
+    } else {
 
+       this.http.post<any>('https://bi-new.mellanox.com/bi-apps/traceability/api/search.php',JSON.stringify(this.myForm.value)).subscribe((data:any)=>{
+         this.step = 2;
+         this.fetchData[0].dataFound = data.FOUND_DATA;
+         this.fetchData[0].totalFetch = data.TOTAL_FETCH;
+         this.fetchData[0].totalSearch = data.SENT_SNS.length
+         this.fetchData[0].notFound = data.NOT_FOUND_DATA.join(', ');
+
+
+          debugger
+      });
+
+    }
   }
 
   sliceUsername(){
      let slicer = this.msalService.instance.getActiveAccount().username.split('@');
-    this.username = slicer[0];
+     this.username = slicer[0];
+     this.myForm.controls.username.patchValue(this.username);
   }
 
   isLoggedIn():boolean{

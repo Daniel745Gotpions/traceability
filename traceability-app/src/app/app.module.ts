@@ -1,7 +1,9 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
+import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
 import { AppComponent } from './app.component';
 import {MSAL_INSTANCE, MsalModule, MsalService} from "@azure/msal-angular";
 import {IPublicClientApplication, PublicClientApplication} from "@azure/msal-browser";
@@ -30,7 +32,10 @@ export function MSALInstanceFactory():IPublicClientApplication{
   imports: [
     BrowserModule,
     AppRoutingModule,
-    MsalModule
+    FormsModule,
+    ReactiveFormsModule,
+    MsalModule,
+    HttpClientModule
   ],
   providers: [
     {

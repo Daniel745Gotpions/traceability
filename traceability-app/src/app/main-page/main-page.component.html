@@ -19,29 +19,79 @@
         </div>
         <div class="card-body">
           <p class="card-text" id="cardContent">
-          <div class="step1">
-            <form id="myForm">
-              <input type="hidden" name="step" value="1">
+          <div  *ngIf="step == 1">
+            <form id="myForm" [formGroup]="myForm">
               <div class="form-group">
                 <label for="batchOption">Select Option:</label>
-                <select name="batchOption" id="batchOption" class="form-control">
+                <select name="batchOption" formControlName="batchOption" (change)="onChange($event)"  id="batchOption" class="form-control" >
                     <option value="{{v.key}}" *ngFor="let v of options">{{v.value}}</option>
                 </select>
               </div>
               <div class="form-group mt-2">
                 <label for="comment">Sns:</label>
-                <textarea class="form-control" name="sns" id="sns" rows="8" id="comment"></textarea>
+                <textarea class="form-control" formControlName="sns" name="sns" id="sns" rows="8" id="comment"></textarea>
                 <div class="mt-2">
 
                   <span style="font-size: 13px;">* Max Serial numbers to load in session is 50,000</span>
                 </div>
               </div>
               <div class="form-group mt-2">
-                <input type="submit" (click)="onSubmit()" value="Action" class="btn btn-success">
+                <input type="submit" (click)="onSubmit()" [disabled]="!myForm.valid" value="Action" class="btn btn-success">
               </div>
             </form>
           </div>
+          <div *ngIf="step==2">
 
+              <div class="row" *ngIf="fetchData[0].selectedOption == 'SERIAL_NUMBER' ">
+                  <div class="col-lg-12">
+                      <b>Traceability information not found for Serial Number:</b> <mark>{{fetchData[0].notFound}} </mark>
+                  </div>
+              </div>
+
+
+            <div class="row">
+              <div class="col-lg-12">
+                <b>Total Serial Result: <mark>{{fetchData[0].totalSearch}}</mark></b>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-lg-12">
+                <b>Total Serial Numbers found: <mark>{{fetchData[0].totalFetch}}</mark></b>
+              </div>
+            </div>
+
+            <hr>
+            <div class="row">
+              <div class="col-lg-12">
+
+
+                <ul class="searchList" *ngIf="fetchData[0].dataFound.length">
+
+                  <li *ngFor="let v of fetchData[0].dataFound">
+                      <input type="checkbox" class="serialsSearch"  checked name="serialsSearch" value="{{v.SERIAL_NUMBER}}">{{v.SERIAL_NUMBER}}
+                  </li>
+
+                </ul>
+
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-lg-12">
+
+
+                <div *ngIf="fetchData[0].dataFound.length">
+                  <input type="button" class="btn btn-success createSessionAction" value="Create Session">
+                  <input type="button" class="btn btn-danger returnBackAction" value="Cancel">
+                </div>
+                <p *ngIf="!fetchData[0].dataFound.length"><b>Traceability information not found..</b></p><br> <input type="button" class="btn btn-danger returnBackAction" value="Back">
+
+              </div>
+            </div>
+          </div>
+          <div *ngIf="step==3">
+
+          </div>
         </div>
         <div class="card-footer" style="color:#6d6d6d">
           Step <i class="fas fa-chevron-right" style="font-size: 12px;padding-right: 5px;"></i>  <span id="stepContain">{{step}}</span>
