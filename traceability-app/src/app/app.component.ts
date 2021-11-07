@@ -10,10 +10,9 @@ import { RouterModule, Routes } from '@angular/router';
 })
 export class AppComponent {
   title = 'traceability-app';
+  displayPlatform = false;
+  constructor( private  msalService: MsalService) {}
 
-  constructor() {}
+  ngOnInit(){}
 
-  ngOnInit(){
-    //alert(this.msalService.instance.getActiveAccount().username);
-  }
 }

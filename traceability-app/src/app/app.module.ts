@@ -12,8 +12,8 @@ import { ApplicationComponent } from './application/application.component';
 export function MSALInstanceFactory():IPublicClientApplication{
   return new PublicClientApplication({
     auth:{
-      clientId:'9c4eec07-cf16-4d54-8218-01d96fccf105',
-      redirectUri:'http://localhost:4200'
+      clientId:'4fd91910-f974-4b05-a2e0-c04e80e7c96c',
+      redirectUri:'http://localhost:4200/home'
     }
   });
 };

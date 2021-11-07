@@ -5,8 +5,8 @@ import {MaslGuard} from "./masl.guard";
 import {ApplicationComponent} from "./application/application.component";
 
 const routes: Routes = [
-  {path:"",redirectTo: 'home', pathMatch: 'full' },
-  {path:"sn-query",component:ApplicationComponent,canActivate:[MaslGuard]},
+
+  {path:"",redirectTo: 'sn-query', pathMatch: 'full' },
   {path:"**",component:MainPageComponent},
 ];
 
