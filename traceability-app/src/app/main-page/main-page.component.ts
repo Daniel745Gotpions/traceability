@@ -12,44 +12,53 @@ export class MainPageComponent implements OnInit {
 
   displayPlatform = false;
   username:string;
+  step:number = 1;
+  options = [
+    {key:'SERIAL_NUMBER',value:'Serial Number'},
+    {key:'SHIP_PACK',value:'Shipment Box Number'},
+    {key:'SHIP_NUMBER',value:'Shipment Number'},
+    {key:'MNF_JOB',value:'Manufacturer Batch'},
+    {key:'JOB_NAME',value:'Completion Batch'},
+    {key:'JOB_NAME_ISSUED',value:'Issued SN for rework job'},
+    {key:'FW_GUID',value:'GUID'},
+    {key:'SFG_SN',value:'SFG Serial Number from Logistics Traceability'},
+    {key:'COMP2',value:'Child Serial Number from Components Traceability'},
+    {key:'SFG_MNF_JOB',value:'SFG Manufacturer Batch'},
+    {key:'IC_LOT',value:'IC Lot'},
+    {key:'ORDER_NUMBER',value:'Sales Order for shipped items'},
+    {key:'PURCHASE_ORDER',value:'Customer Purchase Order for shipped items'},
+    {key:'RMA_NUMBER',value:'RMA Order for returned items'},
+    {key:'RMA_PACK',value:'RMA Order for returned items'},
+    {key:'RMA_PACK',value:"RMA Box Number"},
+    {key:'DELIVERY_ID',value:'Derlivery ID'},
+    {key:'JOB_REWORK',value:'Rework Job'},
+    {key:'IR_MOVE_ORDER',value:'IR Number'},
+    {key:'PO',value:'Purchase order'},
+    {key:'PO_LINE',value:'Purchase order Line'},
+  ];
 
   constructor(private msalService:MsalService,private router:Router) { }
 
   ngOnInit(){
-    //debugger;
-
-
-
-
-    /*this.msalService.instance.handleRedirectPromise().then(
-      res=>{
-        if(res !=null && res.account !=null){
-
-          this.msalService.instance.setActiveAccount(res.account);
-        }
-      }
-    ).catch(err => {
-      console.error(err);
-    });
-
-
-    if(this.isLoggedIn()){
-      this.router.navigateByUrl("/sn-query");
-      //this.router.navigate(['sn-query']);
-    }*/
-    //alert(this.msalService.instance.getActiveAccount().username);
 
     if(!this.isLoggedIn()) {
       this.msalService.loginPopup().subscribe((response: AuthenticationResult) => {
         this.msalService.instance.setActiveAccount(response.account);
         if(this.isLoggedIn()){
           this.displayPlatform = true;
+          this.sliceUsername();
+
         }
       })
+    }else{
+      this.displayPlatform = true;
+      this.sliceUsername();
     }
+  }
 
-    //alert(this.msalService.instance.getActiveAccount().username);
-
+  sliceUsername(){
+     let slicer = this.msalService.instance.getActiveAccount().username.split('@');
+    this.username = slicer[0];
   }
 
   isLoggedIn():boolean{
