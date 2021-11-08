@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {AppHandleService} from "../app-handle.service";
 
 @Component({
   selector: 'app-step-three',
@@ -6,10 +7,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./step-three.component.css']
 })
 export class StepThreeComponent implements OnInit {
-
-  constructor() { }
+  sesstionId:number;
+  constructor(private appService:AppHandleService) { }
 
   ngOnInit(): void {
+    this.sesstionId = this.appService.getSession();
   }
 
+  returnStep1(){
+    this.appService.setStep(1);
+  }
 }

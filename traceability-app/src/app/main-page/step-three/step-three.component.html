@@ -1,1 +1,16 @@
-<p>step-three works!</p>
+<div class="row">
+  <div class="col-lg-12">
+    Session number <mark>{{sesstionId}}</mark> has been created.
+  </div>
+</div>
+<div class="row">
+  <div class="col-lg-12">
+    <i class="fas fa-angle-right"></i> <a target="_blank" href="http://bi12-dev.mellanox.com:9502/analytics/saw.dll?Dashboard&PortalPath=%2Fshared%2FReleased%20Dashboards%2F_portal%2FTraceability&Page=Traceability&Action=RefreshAll&JK_REPORT_ID={{sesstionId}}">To Report</a>
+  </div>
+</div>
+
+<div class="row" style="margin-top: 20px;">
+  <div class="col-lg-12">
+    <input type="button" class="btn btn-danger returnBackAction" (click)="returnStep1();" value="New Search">
+  </div>
+</div>

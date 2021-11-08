@@ -5,6 +5,7 @@ body{
   background: #f8f9fa !important;
   color: #222 !important;
   font-family: DINPro,Helvetica,Arial,Sans-Serif;
+  font-size: 16px;
 }
 
 .card {
@@ -30,6 +31,7 @@ body{
 ul.searchList{
   list-style-type:none;
   padding: 0;
+  margin: 0;
 }
 
 ul.searchList li{
@@ -37,4 +39,8 @@ ul.searchList li{
 }
 ul.searchList li {
   padding:5px;
+}
+
+.background-green{
+  background: #f0fff5;
 }

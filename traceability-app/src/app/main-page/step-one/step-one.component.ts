@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {MsalService} from "@azure/msal-angular";
 import {Routes,ActivatedRoute,Router} from "@angular/router";
 import {AuthenticationResult} from "@azure/msal-browser";
 import {FormBuilder,Validators,FormGroup, FormControl} from "@angular/forms";
 import { HttpClient } from '@angular/common/http';
+import {AppHandleService} from "../app-handle.service";
 
 @Component({
   selector: 'app-step-one',
@@ -11,6 +12,7 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./step-one.component.css']
 })
 export class StepOneComponent implements OnInit {
+  username:string;
   session:string;
   options = [
     {key:'SERIAL_NUMBER',value:'Serial Number'},
@@ -45,10 +47,11 @@ export class StepOneComponent implements OnInit {
   }];
 
   onChange(e){
-    this.fetchData[0].selectedOption = e.target.value;;
+    this.fetchData[0].selectedOption = e.target.value;
+    this.appService.setSelectedOption(e.target.value);
   }
 
-  constructor(private msalService:MsalService,private router:Router,private fb: FormBuilder,private http:HttpClient) { }
+  constructor(private msalService:MsalService,private router:Router,private fb: FormBuilder,private http:HttpClient,private appService:AppHandleService) { }
 
   myForm:any = this.fb.group({
     batchOption: ['SERIAL_NUMBER',Validators.required],
@@ -57,7 +60,12 @@ export class StepOneComponent implements OnInit {
   });
 
   ngOnInit(): void {
+
+    this.appService.setStep( 1 );
+    this.username = this.appService.username;
+    this.myForm.controls.username.patchValue(this.username);
   }
+
   onSubmit(){
 
     if (!this.myForm.valid) {
@@ -66,15 +74,24 @@ export class StepOneComponent implements OnInit {
 
       this.http.post<any>('https://bi-new.mellanox.com/bi-apps/traceability/api/search.php',JSON.stringify(this.myForm.value)).subscribe((data:any)=>{
 
-        this.fetchData[0].dataFound = data.FOUND_DATA;
-        this.fetchData[0].totalFetch = data.TOTAL_FETCH;
-        this.fetchData[0].totalSearch = data.SENT_SNS.length
-        this.fetchData[0].notFound = data.NOT_FOUND_DATA.join(', ');
+        this.appService.setStep(2);
+        let serials = [];
 
+        if(data.FOUND_DATA.length){
+          for (var i=0;i<data.FOUND_DATA.length;i++){
+            serials.push({SERIAL_NUMBER:data.FOUND_DATA[i].SERIAL_NUMBER,isSelected:true});
+          }
+        }
 
-        debugger
+        this.appService.setData({
+          dataFound : serials,
+          totalFetch : data.TOTAL_FETCH,
+          totalSearch : data.SENT_SNS.length,
+          notFound : data.NOT_FOUND_DATA.join(', '),
+          selectedOption : data.SELECTED_OPTIONS,
+        });
+
       });
-
     }
   }
 }

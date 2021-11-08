@@ -1,1 +1,44 @@
-<p>step-two works!</p>
+<div *ngIf="(fetchData | keyvalue).length != 0">
+
+  <div class="row" *ngIf="fetchData.selectedOption == 'SERIAL_NUMBER' && fetchData.notFound.length">
+    <div class="col-lg-12">
+      <b>Traceability information not found for Serial Number:</b> <mark>{{fetchData.notFound}} </mark>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-12">
+      <b>Total Search Result: <mark>{{fetchData.totalSearch}}</mark></b>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-12">
+      <b>Total Serial Numbers found: <mark>{{fetchData.totalFetch}}</mark></b>
+    </div>
+  </div>
+
+  <hr>
+  <div class="row">
+    <div class="col-lg-12">
+      <ul class="searchList" *ngIf="serials.length">
+        <li *ngFor="let v of serials">
+          <input type="checkbox" class="serialsSearch" style="margin-right: 5px;" [(ngModel)]="v.isSelected" id="{{v.SERIAL_NUMBER}}" checked name="{{v.SERIAL_NUMBER}}" value="{{v.SERIAL_NUMBER}}"> <label style="margin: 0" for="{{v.SERIAL_NUMBER}}">{{v.SERIAL_NUMBER}}</label>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-12">
+      <div *ngIf="fetchData.dataFound.length">
+        <input type="button" style="margin-right: 5px;" class="btn btn-success " (click)="createSession()"  value="Create Session">
+        <input type="button" (click)="returnStep1();" class="btn btn-danger returnBackAction" value="Cancel">
+      </div>
+      <div *ngIf="!fetchData.dataFound.length">
+        <p><b>Traceability information not found..</b></p>
+        <br>
+        <input (click)="returnStep1();" type="button" class="btn btn-danger returnBackAction" value="Back">
+      </div>
+    </div>
+  </div>
+</div>
