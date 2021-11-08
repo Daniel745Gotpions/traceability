@@ -18,8 +18,8 @@ import { StepThreeComponent } from './main-page/step-three/step-three.component'
 export function MSALInstanceFactory():IPublicClientApplication{
   return new PublicClientApplication({
     auth:{
-      clientId:'4fd91910-f974-4b05-a2e0-c04e80e7c96c',
-      redirectUri:'http://localhost:4200/home'
+      clientId:'b62fa12e-3907-4827-a458-250a8fbd7769',
+      redirectUri:'https://bi-new.mellanox.com/bi-apps/traceability/application/'
     }
   });
 };
