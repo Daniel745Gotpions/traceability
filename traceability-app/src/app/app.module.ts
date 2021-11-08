@@ -10,6 +10,9 @@ import {IPublicClientApplication, PublicClientApplication} from "@azure/msal-bro
 import { MainPageComponent } from './main-page/main-page.component';
 import { ApplicationComponent } from './application/application.component';
 import { NotFoundComponent } from './not-found/not-found.component';
+import { StepOneComponent } from './main-page/step-one/step-one.component';
+import { StepTwoComponent } from './main-page/step-two/step-two.component';
+import { StepThreeComponent } from './main-page/step-three/step-three.component';
 
 
 export function MSALInstanceFactory():IPublicClientApplication{
@@ -27,6 +30,9 @@ export function MSALInstanceFactory():IPublicClientApplication{
     MainPageComponent,
     ApplicationComponent,
     NotFoundComponent,
+    StepOneComponent,
+    StepTwoComponent,
+    StepThreeComponent,
 
   ],
   imports: [

@@ -6,16 +6,12 @@ import {FormBuilder,Validators,FormGroup, FormControl} from "@angular/forms";
 import { HttpClient } from '@angular/common/http';
 
 @Component({
-  selector: 'app-main-page',
-  templateUrl: './main-page.component.html',
-  styleUrls: ['./main-page.component.css']
+  selector: 'app-step-one',
+  templateUrl: './step-one.component.html',
+  styleUrls: ['./step-one.component.css']
 })
-export class MainPageComponent implements OnInit {
-
-  displayPlatform:boolean = false;
-  username:string;
-  step:number = 1;
- /* session:string;
+export class StepOneComponent implements OnInit {
+  session:string;
   options = [
     {key:'SERIAL_NUMBER',value:'Serial Number'},
     {key:'SHIP_PACK',value:'Shipment Box Number'},
@@ -50,51 +46,35 @@ export class MainPageComponent implements OnInit {
 
   onChange(e){
     this.fetchData[0].selectedOption = e.target.value;;
-  }*/
+  }
 
   constructor(private msalService:MsalService,private router:Router,private fb: FormBuilder,private http:HttpClient) { }
 
-  /*myForm:any = this.fb.group({
+  myForm:any = this.fb.group({
     batchOption: ['SERIAL_NUMBER',Validators.required],
     sns:['', Validators.required],
     username:['',Validators.required]
-  });*/
+  });
 
-  ngOnInit(){
+  ngOnInit(): void {
+  }
+  onSubmit(){
 
-    if(!this.isLoggedIn()) {
-      this.msalService.loginPopup().subscribe((response: AuthenticationResult) => {
-        this.msalService.instance.setActiveAccount(response.account);
-        if(this.isLoggedIn()){
-          this.displayPlatform = true;
-          this.sliceUsername();
+    if (!this.myForm.valid) {
+      return false;
+    } else {
 
-        }
-      })
-    }else{
-      this.displayPlatform = true;
-      this.sliceUsername();
+      this.http.post<any>('https://bi-new.mellanox.com/bi-apps/traceability/api/search.php',JSON.stringify(this.myForm.value)).subscribe((data:any)=>{
+
+        this.fetchData[0].dataFound = data.FOUND_DATA;
+        this.fetchData[0].totalFetch = data.TOTAL_FETCH;
+        this.fetchData[0].totalSearch = data.SENT_SNS.length
+        this.fetchData[0].notFound = data.NOT_FOUND_DATA.join(', ');
+
+
+        debugger
+      });
+
     }
   }
-
-  returnStep1(){
-    this.step = 1;
-  }
-
-
-
-  sliceUsername(){
-     let slicer = this.msalService.instance.getActiveAccount().username.split('@');
-     this.username = slicer[0];
-    // this.myForm.controls.username.patchValue(this.username);
-  }
-
-  isLoggedIn():boolean{
-    return this.msalService.instance.getActiveAccount() != null;
-  }
-
-  logout(){
-    this.msalService.logout();
-  }
-
 }

@@ -19,27 +19,8 @@
         </div>
         <div class="card-body">
           <p class="card-text" id="cardContent">
-          <div  *ngIf="step == 1">
-            <form id="myForm" [formGroup]="myForm">
-              <div class="form-group">
-                <label for="batchOption">Select Option:</label>
-                <select name="batchOption" formControlName="batchOption" (change)="onChange($event)"  id="batchOption" class="form-control" >
-                    <option value="{{v.key}}" *ngFor="let v of options">{{v.value}}</option>
-                </select>
-              </div>
-              <div class="form-group mt-2">
-                <label for="comment">Sns:</label>
-                <textarea class="form-control" formControlName="sns" name="sns" id="sns" rows="8" id="comment"></textarea>
-                <div class="mt-2">
+            <app-step-one *ngIf="step == 1"></app-step-one>
 
-                  <span style="font-size: 13px;">* Max Serial numbers to load in session is 50,000</span>
-                </div>
-              </div>
-              <div class="form-group mt-2">
-                <input type="submit" (click)="onSubmit()" [disabled]="!myForm.valid" value="Action" class="btn btn-success">
-              </div>
-            </form>
-          </div>
           <div *ngIf="step==2">
 
               <div class="row" *ngIf="fetchData[0].selectedOption == 'SERIAL_NUMBER' && fetchData[0].notFound.length">
