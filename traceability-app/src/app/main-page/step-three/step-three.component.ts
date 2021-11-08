@@ -7,13 +7,13 @@ import {AppHandleService} from "../app-handle.service";
   styleUrls: ['./step-three.component.css']
 })
 export class StepThreeComponent implements OnInit {
-  sesstionId:number;
+  sessionId:number;
   domain:string='';
   constructor(private appService:AppHandleService) { }
 
   ngOnInit(): void {
     this.domain = this.appService.getDomain();
-    this.sesstionId = this.appService.getSession();
+    this.sessionId = this.appService.getSession();
   }
 
   returnStep1(){
