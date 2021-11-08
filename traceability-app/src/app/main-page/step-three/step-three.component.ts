@@ -8,9 +8,11 @@ import {AppHandleService} from "../app-handle.service";
 })
 export class StepThreeComponent implements OnInit {
   sesstionId:number;
+  domain:string='';
   constructor(private appService:AppHandleService) { }
 
   ngOnInit(): void {
+    this.domain = this.appService.getDomain();
     this.sesstionId = this.appService.getSession();
   }
 

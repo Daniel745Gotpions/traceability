@@ -13,6 +13,8 @@ export class AppHandleService {
   public  username:string;
   public totalSerial = [];
   private sessionId:number;
+  private liveDomain = "https://bi12ssl.mellanox.com";
+  private DevDomain = "http://bi12-dev.mellanox.com:9502";
 
   constructor() { }
 
@@ -53,5 +55,27 @@ export class AppHandleService {
 
   getSelectedOption(){
     return this.selectedOption;
+  }
+
+  getDomain(){
+    //this.setInLocaleStorage('debugger',1);
+    let local = this.getInLocalStorage('debugger');
+    if(local != null){
+      return this.DevDomain;
+    }else {
+      return this.liveDomain;
+    }
+  }
+
+  deleteLocalStorage(key){
+    localStorage.removeItem(key);
+  }
+
+  setInLocaleStorage(key,value){
+    localStorage.setItem(key, value);
+  }
+
+  getInLocalStorage(key){
+    return localStorage.getItem(key);
   }
 }

@@ -21,7 +21,7 @@ export class MainPageComponent implements OnInit {
   step:number = 1 ;
   doneFlag:string ='';
   ngOnInit(){
-
+    this.appService.getDomain();
     this.appService.step.subscribe(
       (step:number)=>{
         this.step = step;
