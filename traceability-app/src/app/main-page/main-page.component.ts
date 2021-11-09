@@ -20,6 +20,7 @@ export class MainPageComponent implements OnInit {
   username:string='';
   step:number = 1 ;
   doneFlag:string ='';
+
   ngOnInit(){
     this.appService.getDomain();
     this.appService.step.subscribe(
@@ -45,6 +46,10 @@ export class MainPageComponent implements OnInit {
 
   returnStep1(){
     this.step = 1;
+  }
+
+  reloadPage(){
+    window.location.reload();
   }
 
   sliceUsername(){

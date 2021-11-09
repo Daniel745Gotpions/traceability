@@ -8,10 +8,10 @@
   </div>
 </nav>
 
-<div class="container" style="padding-top: 50px;" *ngIf="displayPlatform">
+<div class="container" style="padding-top: 50px;" >
   <div class="row">
-    <div class="col-lg-3"></div>
-    <div class="col-lg-6">
+    <!--<div class="col-lg-3"></div>-->
+    <div class="col-lg-12" *ngIf="displayPlatform">
       <div class="card" style="margin-bottom: 10px;">
         <div class="card-header">
           <div style="color:#6d6d6d;" *ngIf="username">Hello - {{username}} </div>
@@ -33,6 +33,14 @@
         </div>
       </div>
     </div>
-    <div class="col-lg-3"></div>
+    <div class="col-lg-6" *ngIf="!displayPlatform">
+      <div class="alert alert-success">
+        <strong>Notification</strong> <br>Accept the popup notification in the browser and Sign To Your Microsoft Account To see the content.
+        <div style="text-align: center;" class="mt-3">
+          <input type="button" class="btn btn-success" (click)="reloadPage()" value="Reload Page">
+        </div>
+      </div>
+    </div>
+   <!-- <div class="col-lg-3"></div>-->
   </div>
 </div> <!-- container end -->
